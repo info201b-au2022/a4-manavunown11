@@ -1,7 +1,7 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "A4: Prison Data"
+author: "Manav Agarwal"
+date: '2022-11-21'
 output: html_document
 ---
 
@@ -34,8 +34,8 @@ print(sum)
 ```
 
 ## Introduction 
-[TODO]
-
+The data from Vera Institute deals with incarceration data from 1970 - 2018 classified by various racial demographics. This data can help us showcase which of these demographics are minoritized, and disproportionately affected by, compared to those that have relative power in this society. For this specific assignment, I intend to analyzing the dataset relating to the Asian American and Pacific Islanders population. As observed in the news, there was an increase on attacks and disproportionate violence and racism against this demographic, during the peak of the COVID-19 pandemic, and through this assignment I hope to track this over a period of time. The direct stakeholders of this dataset are the people whose information is contained in this. The indirect stakeholders are the entire current and future populations of these various groups classified in this dataset.
+I intend on analyzing the trends in the crimes and prison rate of African American demographics. 
 ## Data Summary 
 [TODO]
 
