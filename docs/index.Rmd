@@ -22,17 +22,20 @@ source("../source/analysis.R")
 ```
 ## Abstract 
 The assignment deals with prison data in the US from 1970-2018. As part of the instructions, I dealt with work that needed me to plot crime and imprisonment trends over the specified time frame. I also had to do the same, however, over specific state data. Lastly, I worked specifically with data involving black populations and how they are minoritized in the criminal justice system and its dealings. 
-(Since the most updated data was from 2016, most of the calculations involve that data)
+
+(Since the most updated data was from 2016, most of the calculations involve that information)
 ## Introduction 
 Working through this assignment gave me a lot of knowledge regarding the criminal justice system in the US and has resulted in me gaining immense respect for the work that the Vera Institute is doing. While completing this assignment, I understood the prison data as published in the data set and worked on completing tests with it. I saw how the data trended with specific states and how it met with my expectations. Lastly, I got to focus on the data specifically dealing with black populations. With the wide knowledge of Black Lives Matters and general oppression of this minoritized group, I found out how difficult the situation is and made me aware of my privilege. 
 I applaud the work of Vera Institute in culminating this data set, providing this important information to wide populations throughout the world. It is going to be helpful for future generations in understanding imprisonment and the problem with American imprisonment system. 
 
 ## Data Summary 
 Black population in jails in 2016: 245882;
+
 Black jail percentage in 2016: 33.5%;
+
 Black population average over recorded years: 164400.81
 
-These data points give more information that meets the eye. It is astonishing the number of black people in jails as recently as 2016, and their percentage in jails. As noted in the codebook, there were quiet a lot of missing variables, the presence of which would change the results significantly. Hence, it is safe to assume that the situation at present is much worse than originally assumed. Black people are significantly oppressed in the criminal justice system and seeing the 33.5% percentage alone can leave one astonished. 
+These data points give more information than meets the eye. It is astonishing the number of black people in jails as recently as 2016, and their percentage in jails. As noted in the codebook, there were quiet a lot of missing variables, the presence of which would change the results significantly. Hence, it is safe to assume that the situation at present is much worse than originally assumed. Black people are significantly oppressed in the criminal justice system and seeing the 33.5% percentage alone can leave one astonished. 
 
 ## Section 3
 
@@ -76,6 +79,7 @@ get_black_pop_prison_graph()
 ```
 
 How do black populations map to the populations in jail?
+
 This graph represents the black population to population in prison for the county that has the highest black imprisonment rate. As we can see, there are external forces that are contributing to this insane difference in population and population in prison.
 
 ## Section 6: A map shows potential patterns of inequality that vary geographically
@@ -86,4 +90,5 @@ black_prison_pop_map()
 ```
 
 How do the jail rates among black populations trend on counties when plotted on a map?
+
 Seeing how Cook County has the highest jail population of black people, and Wade Hampton Census Area has highest proportion of black people, one would imagine these two points would end up dark red on the map. However, to my surprise, such was not the case. While most of the country was overwhelmingly blue, there were very specific counties with really high rates of black imprisonment and tints of maroon showing data somewhere in the middle as well.  
