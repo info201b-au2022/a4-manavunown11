@@ -36,6 +36,7 @@ plot_jail_pop_for_us()
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
 #----------------------------------------------------------------------------#
+#Function creates a dataframe to containing US Prison Data from 1970-2018
 get_jail_pop_by_states <- function(states){
   state_prison_pop <- incarceration_data %>% filter(is.element(state, states) & !is.na(total_jail_pop)) %>% group_by(year, state) %>% 
     summarise(total_jail_pop = sum(total_jail_pop))
@@ -43,6 +44,7 @@ get_jail_pop_by_states <- function(states){
 }
 get_jail_pop_by_states(c("WA", "OR", "CA"))
 
+#These functions plot the data from the above function showing multiple states
 plot_jail_pop_by_states <- function(states){
   state_data <- get_jail_pop_by_states(states)
   plot_state_prison_pop <- ggplot(state_data, mapping = aes(x = year, y = total_jail_pop, group = state, color = state)) + geom_line() +
@@ -64,24 +66,37 @@ plot_jail_pop_by_states(c("WA", "OR", "CA", "NY", "WV", "OH", "TX", "FL"))
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
 #----------------------------------------------------------------------------#
+#Creating dataframe with all data related to black populations
+black_pop_info_df <- incarceration_data %>% select(yfips, year, fips, state, county_name, total_pop, 
+                                                   black_pop_15to64,total_jail_pop, total_prison_pop, 
+                                          black_prison_pop, black_jail_pop, black_male_prison_pop, 
+                                          black_female_prison_pop, black_jail_pop_rate) %>% 
+  mutate("county_location" = paste0(county_name, ", ", state), 
+         "black_pop_prop" = paste0((black_pop_15to64/total_pop) * 100))
 
-black_pop_info_df <- incarceration_data %>% select(yfips, year, fips, state, county_name, total_pop, black_pop_15to64,total_jail_pop, total_prison_pop, 
-                                          black_prison_pop, black_jail_pop, black_male_prison_pop, black_female_prison_pop, black_jail_pop_rate) %>% 
-  mutate("county_location" = paste0(county_name, ", ", state), "black_pop_prop" = paste0((black_pop_15to64/total_pop) * 100))
-
-highest_jail_black_county <- black_pop_info_df %>% filter(year == 2016) %>% select(year, county_location, black_jail_pop) %>% 
+#Calculating various statistics about counties relating to black populations
+highest_jail_black_county <- black_pop_info_df %>% filter(year == 2016) %>% 
+  select(year, county_location, black_jail_pop) %>% 
   arrange(desc(black_jail_pop)) %>% slice_head() %>% pull(county_location)
-
-highest_pop_black_county <- black_pop_info_df %>% filter(year == 2016) %>% filter(black_pop_15to64 == max(black_pop_15to64)) %>% pull(county_location)
-highest_pop_prop_black_county <- black_pop_info_df %>% filter(year == 2016) %>% filter(black_pop_prop == max(black_pop_prop)) %>% pull(county_location)
-highest_jail_black_rate_county <- black_pop_info_df %>% filter(year == 2016) %>% select(year, county_location, black_jail_pop_rate) %>% 
+highest_pop_black_county <- black_pop_info_df %>% filter(year == 2016) %>% 
+  filter(black_pop_15to64 == max(black_pop_15to64)) %>% pull(county_location)
+highest_pop_prop_black_county <- black_pop_info_df %>% filter(year == 2016) %>% 
+  filter(black_pop_prop == max(black_pop_prop)) %>% pull(county_location)
+highest_jail_black_rate_county <- black_pop_info_df %>% filter(year == 2016) %>% 
+  select(year, county_location, black_jail_pop_rate) %>% 
   arrange(desc(black_jail_pop_rate)) %>% slice_head() %>% pull(county_location)
 
+king_tx_black_pop_prop <- black_pop_info_df %>% filter(year == 2016) %>% filter(county_location == "King County, TX") %>%
+  pull(black_pop_prop)
+#Creating dataframe with all data related to plotting the graph with two continuous variables
 get_black_pop_prison <- function(){
-  black_pop_prison_df <- black_pop_info_df %>% select(year, county_location, black_pop_15to64, black_jail_pop, black_pop_prop, black_jail_pop_rate) %>% filter(county_location == highest_pop_black_county)
+  black_pop_prison_df <- black_pop_info_df %>% 
+    select(year, county_location, black_pop_15to64, black_jail_pop, black_pop_prop, black_jail_pop_rate) %>% 
+    filter(county_location == highest_pop_black_county)
   return(black_pop_prison_df)
 }
 
+#Plots a bar graph of black population proportion in New York County, NY with respect to black jail population rate
 plot_black_pop_prison <- function(){
   data <- get_black_pop_prison()
   black_pop_prison_graph <- ggplot(data) +
@@ -96,8 +111,11 @@ plot_black_pop_prison()
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
 #----------------------------------------------------------------------------#
-map_df <- black_pop_info_df %>% filter(year == 2016) %>% select(fips, county_name, black_jail_pop_rate) %>% filter(!is.na(black_jail_pop_rate))
-black_county_pop_df <- map_data("county") %>% unite(polyname, region, subregion, sep = ",") %>% left_join(county.fips, by = "polyname")
+#Plotting map of counties in the US based on their Jail Population rates
+map_df <- black_pop_info_df %>% filter(year == 2016) %>% select(fips, county_name, black_jail_pop_rate) %>% 
+  filter(!is.na(black_jail_pop_rate))
+black_county_pop_df <- map_data("county") %>% unite(polyname, region, subregion, sep = ",") %>% 
+  left_join(county.fips, by = "polyname")
   
 get_black_pop_prison_map <- function(){
   black_pop_prison_map_df <- black_county_pop_df %>% left_join(map_df, by = "fips")
