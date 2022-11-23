@@ -125,8 +125,7 @@ get_black_pop_prison_graph()
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
 #----------------------------------------------------------------------------#
-#Plotting map of counties in the US based on their Jail Population rates
-
+#Wrangling data required to map the jail rate as in the next function
 get_black_pop_prison_map <- function(){
   map_df <- black_pop_info_df %>% filter(year == 2016) %>% select(fips, county_name, black_jail_pop_rate) %>% 
   filter(!is.na(black_jail_pop_rate))
@@ -135,11 +134,12 @@ get_black_pop_prison_map <- function(){
   return(black_pop_prison_map_df)
 }
 
-blank_theme <- theme_bw() +
-  theme(axis.line = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
-        plot.background = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank())
+#Plotting map of counties in the US based on their Jail Population rates
 
 black_prison_pop_map <- function(){
+  blank_theme <- theme_bw() +
+  theme(axis.line = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
+        plot.background = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank())
   black_map_df <- get_black_pop_prison_map()
   latest_black_jail_pop_rate <- ggplot(black_map_df) +
     geom_polygon(mapping = aes(x = long, y = lat, group = group, fill = black_jail_pop_rate),
