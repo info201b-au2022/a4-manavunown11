@@ -86,4 +86,4 @@ black_prison_pop_map()
 ```
 
 How do the jail rates among black populations trend on counties when plotted on a map?
-Seeing how Cook County has the highest jail population of black people, and Wade Hampton Census Area has highest proportion of black people, one would imagine these two points would end up dark red on the map. However, to my surprise, such was not the case. While most of the country was overwhelmingly green, there were very specific counties with really high rates of black imprisonment.  
+Seeing how Cook County has the highest jail population of black people, and Wade Hampton Census Area has highest proportion of black people, one would imagine these two points would end up dark red on the map. However, to my surprise, such was not the case. While most of the country was overwhelmingly blue, there were very specific counties with really high rates of black imprisonment and tints of maroon showing data somewhere in the middle as well.  

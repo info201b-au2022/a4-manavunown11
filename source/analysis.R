@@ -135,7 +135,7 @@ get_black_pop_prison_map <- function(){
   return(black_pop_prison_map_df)
 }
 
-map_theme <- theme_bw() +
+blank_theme <- theme_bw() +
   theme(axis.line = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
         plot.background = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank())
 
@@ -143,8 +143,8 @@ black_prison_pop_map <- function(){
   black_map_df <- get_black_pop_prison_map()
   latest_black_jail_pop_rate <- ggplot(black_map_df) +
     geom_polygon(mapping = aes(x = long, y = lat, group = group, fill = black_jail_pop_rate),
-                 color = "black", size = 0.1) + scale_fill_continuous(limits = c(0, max(black_map_df$black_jail_pop_rate)), 
-                          na.value = "white", low = "green", high = "red") + map_theme +
+                 color = "white", size = 0.1) + scale_fill_continuous(limits = c(0, max(black_map_df$black_jail_pop_rate)), 
+                          na.value = "white", low = "blue", high = "red") + blank_theme +
     labs(title = "Latest Black Jail Population Rate in the USA")
   return(latest_black_jail_pop_rate)
 }
