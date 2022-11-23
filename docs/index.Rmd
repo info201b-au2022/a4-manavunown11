@@ -10,35 +10,75 @@ source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, warning = FALSE, echo = FALSE, include = FALSE}
+library("knitr")
+options(tidyverse.quiet = TRUE)
+source("../source/analysis.R")
+
+```
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+The assignment deals with prison data in the US from 1970-2018. As part of the instructions, I dealt with work that needed me to plot crime and imprisonment trends over the specified time frame. I also had to do the same, however, over specific state data. Lastly, I worked specifically with data involving black populations and how they are minoritized in the criminal justice system and its dealings. 
 
 ## Introduction 
-Working through this assignment gave me a lot of knowledge regarding the criminal justice system in the US, and has resulted in me gaining immense respect for the work that the Vera Institute is doing. 
+Working through this assignment gave me a lot of knowledge regarding the criminal justice system in the US and has resulted in me gaining immense respect for the work that the Vera Institute is doing. While completing this assignment, I understood the prison data as published in the data set and worked on completing tests with it. I saw how the data trended with specific states and how it met with my expectations. Lastly, I got to focus on the data specifically dealing with black populations. With the wide knowledge of Black Lives Matters and general oppression of this minoritized group, I found out how difficult the situation is and made me aware of my privilege. 
+I applaud the work of Vera Institute in culminating this data set, providing this important information to wide populations throughout the world. It is going to be helpful for future generations in understanding imprisonment and the problem with American imprisonment system. 
+
 ## Data Summary 
-[TODO]
+Black population in jails in 2016: 245882
+Black jail percentage in 2016: 33.5%
+Black population average over recorded years: 164400.81
 
-[TODO ... other sections ... See Canvas for details]
+These data points give more information that meets the eye. It is astonishing the number of black people in jails as recently as 2016, and their percentage in jails. As noted in the codebook, there were quiet a lot of missing variables, the presence of which would change the results significantly. Hence, it is safe to assume that the situation at present is much worse than originally assumed. Black people are significantly oppressed in the criminal justice system and seeing the 33.5% percentage alone can leave one astonished. 
 
-_All the very best with your work!_
+## Section 3
 
+```{r Jail plot graph, echo = FALSE, warning = FALSE}
+
+plot_jail_pop_for_us()
+
+```
+What is the trend of US Prison Population across the years recorded in the dataset?
+
+As seen in this graph, the US prison population was mostly steady between 1970 and 1980, however, starting in the 80s, the prison population exploded and peaked in 2008. Following that, it has slowly decreased however there has not been considerable decrease in the numbers so far. This makes one question, what led to this sudden explosion in prison population starting in 1980?
+
+## Section 4
+```{r Jail Population by west coast states, echo = FALSE, warning = FALSE}
+
+plot_jail_pop_by_states(c("WA", "OR", "CA"))
+
+```
+Where does the west coast stand on prison population?
+
+As one could have imagined, California, the state with the largest population in the US has significantly higher jail populations as compared to the other two states. However, Washington and Oregon also have significant populations, while not nearly as much as California, but have managed to keep really low prison populations. This can make one wonder what are some policies that could have been undertaken by these two state governments that resulted in such a difference when compared to California?
+
+```{r Jail Population by states, echo = FALSE, warning = FALSE}
+
+plot_jail_pop_by_states(c("WA", "OR", "CA", "NY", "WV", "OH", "TX", "FL"))
+
+```
+How do some of the states trend soecifically with Jail Population in their states?
+
+While we already saw the results in the west coast states, adding some other states from various regions of the country shows new, interesting trends. New York has significantly lower populations for such an important and populous state. Furthermore, one can understand the numbers as seen for Texas and Florida.
+
+## Section 5: Variable comparison that reveals potential patterns of inequality
+
+```{r Black populations in prison, echo = FALSE, warning = FALSE}
+
+get_black_pop_prison_graph()
+
+```
+How do black populations map to the populations in jail?
+This graph represents the black population to population in prison for the county that has the highest black imprisonment rate. As we can see, there are external forces that are contributing to this insane difference in population and population in prison.
+
+## Section 6: A map shows potential patterns of inequality that vary geographically
+```{r Black populations in prison on a map, echo = FALSE, warning = FALSE}
+
+black_prison_pop_map()
+
+```
+How do the jail rates among black populations trend on counties when plotted on a map?
+Seeing how Cook County has the highest jail population of black people, and Wade Hampton Census Area has highest proportion of black people, one would imagine these two points would end up dark red on the map. However, to my surprise, such was not the case. While most of the country was overwhelmingly green, there were very specific counties with really high rates of black imprisonment.  

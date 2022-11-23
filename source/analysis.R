@@ -4,13 +4,25 @@ library(dplyr)
 library(maps)
 # The functions might be useful for A4
 source("/Users/manav/Documents/info201/assignments/a4-manavunown11/source/a4-helpers.R")
-
+incarceration_data <- read.csv("~/Documents/info201/data/incarceration_trends.csv")
 ## Section 2  ---- 
 #----------------------------------------------------------------------------#
 # Your functions and variables might go here ... <todo: update comment>
 #----------------------------------------------------------------------------#
-incarceration_data <- read.csv("~/Documents/info201/data/incarceration_trends.csv")
+black_jail_pop_2016 <- incarceration_data %>% select(year, black_jail_pop) %>% filter(year == 2016) %>%
+  summarize(black_pop_jailed = sum(black_jail_pop, na.rm = TRUE)) %>%
+  pull(black_pop_jailed)
 
+jail_pop_2016_total <- incarceration_data %>% select(year, total_jail_pop) %>% filter(year == 2016) %>%
+  summarize(total_pop_jail = sum(total_jail_pop, na.rm = TRUE)) %>%
+  pull(total_pop_jail)
+
+black_jail_percent = (black_jail_pop_2016/jail_pop_2016_total)* 100
+
+black_pop_sum <- incarceration_data %>% summarize(black_sum = sum(black_jail_pop, na.rm = TRUE)) %>%
+  pull(black_sum)
+
+black_pop_avg = black_pop_sum/(2018 - 1970)
 ## Section 3  ---- 
 #----------------------------------------------------------------------------#
 # Growth of the U.S. Prison Population
@@ -56,7 +68,7 @@ plot_jail_pop_by_states(c("WA", "OR", "CA"))
 plot_jail_pop_by_states <- function(states){
   state_data <- get_jail_pop_by_states(states)
   plot_state_prison_pop <- ggplot(state_data, mapping = aes(x = year, y = total_jail_pop, group = state, color = state)) + geom_line() +
-    labs(title = "Line Chart to plot variation", x = "Year", y = "Jail Population by state")
+    labs(title = "Line Chart to plot variation by states", x = "Year", y = "Jail Population by state")
     return(plot_state_prison_pop)
 }
 plot_jail_pop_by_states(c("WA", "OR", "CA", "NY", "WV", "OH", "TX", "FL"))
@@ -88,23 +100,23 @@ highest_jail_black_rate_county <- black_pop_info_df %>% filter(year == 2016) %>%
 
 king_tx_black_pop_prop <- black_pop_info_df %>% filter(year == 2016) %>% filter(county_location == "King County, TX") %>%
   pull(black_pop_prop)
+
 #Creating dataframe with all data related to plotting the graph with two continuous variables
 get_black_pop_prison <- function(){
   black_pop_prison_df <- black_pop_info_df %>% 
-    select(year, county_location, black_pop_15to64, black_jail_pop, black_pop_prop, black_jail_pop_rate) %>% 
-    filter(county_location == highest_pop_black_county)
+    select(year, county_location, black_pop_15to64, black_jail_pop) %>% filter(county_location == "King County, TX") %>%
+    filter(!is.na(black_pop_15to64) & !is.na(black_jail_pop)) 
   return(black_pop_prison_df)
 }
 
-#Plots a bar graph of black population proportion in New York County, NY with respect to black jail population rate
-plot_black_pop_prison <- function(){
-  data <- get_black_pop_prison()
-  black_pop_prison_graph <- ggplot(data) +
-  geom_col(mapping = aes(x = black_pop_prop, y = black_jail_pop)) +
-  labs(title = "Black Population vs Jail Population", x = "Black Population", y = "Black Jail Population")
-  return(black_pop_prison_graph)
+#Plots a graph of black population proportion in King County, TX with respect to jailing
+get_black_pop_prison_graph <- function(){
+  black_pop_prison_plot <- ggplot(get_black_pop_prison()) +
+    geom_smooth(aes(x = black_pop_15to64, y = black_jail_pop)) +
+    labs(title = "Black Population vs Prison Population", x = "Black Population", y = "Black Jail Population")
+  return(black_pop_prison_plot)
 }
-plot_black_pop_prison()
+get_black_pop_prison_graph()
 ## Section 6  ---- 
 #----------------------------------------------------------------------------#
 # <a map shows potential patterns of inequality that vary geographically>
