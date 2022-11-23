@@ -9,6 +9,7 @@ incarceration_data <- read.csv("~/Documents/info201/data/incarceration_trends.cs
 #----------------------------------------------------------------------------#
 # Your functions and variables might go here ... <todo: update comment>
 #----------------------------------------------------------------------------#
+#Calculating population for black people in jail in 2016
 black_jail_pop_2016 <- incarceration_data %>% select(year, black_jail_pop) %>% filter(year == 2016) %>%
   summarize(black_pop_jailed = sum(black_jail_pop, na.rm = TRUE)) %>%
   pull(black_pop_jailed)
@@ -16,9 +17,10 @@ black_jail_pop_2016 <- incarceration_data %>% select(year, black_jail_pop) %>% f
 jail_pop_2016_total <- incarceration_data %>% select(year, total_jail_pop) %>% filter(year == 2016) %>%
   summarize(total_pop_jail = sum(total_jail_pop, na.rm = TRUE)) %>%
   pull(total_pop_jail)
-
+#Calculating percentage of black people in jail in 2016
 black_jail_percent = (black_jail_pop_2016/jail_pop_2016_total)* 100
 
+#Average population of black people over recorded time period
 black_pop_sum <- incarceration_data %>% summarize(black_sum = sum(black_jail_pop, na.rm = TRUE)) %>%
   pull(black_sum)
 
@@ -124,17 +126,16 @@ get_black_pop_prison_graph()
 # See Canvas
 #----------------------------------------------------------------------------#
 #Plotting map of counties in the US based on their Jail Population rates
-map_df <- black_pop_info_df %>% filter(year == 2016) %>% select(fips, county_name, black_jail_pop_rate) %>% 
-  filter(!is.na(black_jail_pop_rate))
-black_county_pop_df <- map_data("county") %>% unite(polyname, region, subregion, sep = ",") %>% 
-  left_join(county.fips, by = "polyname")
-  
+
 get_black_pop_prison_map <- function(){
+  map_df <- black_pop_info_df %>% filter(year == 2016) %>% select(fips, county_name, black_jail_pop_rate) %>% 
+  filter(!is.na(black_jail_pop_rate))
+  black_county_pop_df <- map_data("county") %>% unite(polyname, region, subregion, sep = ",") %>% left_join(county.fips, by = "polyname")
   black_pop_prison_map_df <- black_county_pop_df %>% left_join(map_df, by = "fips")
   return(black_pop_prison_map_df)
 }
 
-blank_theme <- theme_bw() +
+map_theme <- theme_bw() +
   theme(axis.line = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
         plot.background = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank())
 
@@ -142,13 +143,12 @@ black_prison_pop_map <- function(){
   black_map_df <- get_black_pop_prison_map()
   latest_black_jail_pop_rate <- ggplot(black_map_df) +
     geom_polygon(mapping = aes(x = long, y = lat, group = group, fill = black_jail_pop_rate),
-                 color = "black", size = 0.2) + scale_fill_continuous(limits = c(0, max(black_map_df$black_jail_pop_rate)), 
-                          na.value = "white", low = "green", high = "red") +
-    blank_theme +
+                 color = "black", size = 0.1) + scale_fill_continuous(limits = c(0, max(black_map_df$black_jail_pop_rate)), 
+                          na.value = "white", low = "green", high = "red") + map_theme +
     labs(title = "Latest Black Jail Population Rate in the USA")
   return(latest_black_jail_pop_rate)
 }
 black_prison_pop_map()
-## Load data frame ---- 
+
 
 

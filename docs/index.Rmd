@@ -28,8 +28,8 @@ Working through this assignment gave me a lot of knowledge regarding the crimina
 I applaud the work of Vera Institute in culminating this data set, providing this important information to wide populations throughout the world. It is going to be helpful for future generations in understanding imprisonment and the problem with American imprisonment system. 
 
 ## Data Summary 
-Black population in jails in 2016: 245882
-Black jail percentage in 2016: 33.5%
+Black population in jails in 2016: 245882;
+Black jail percentage in 2016: 33.5%;
 Black population average over recorded years: 164400.81
 
 These data points give more information that meets the eye. It is astonishing the number of black people in jails as recently as 2016, and their percentage in jails. As noted in the codebook, there were quiet a lot of missing variables, the presence of which would change the results significantly. Hence, it is safe to assume that the situation at present is much worse than originally assumed. Black people are significantly oppressed in the criminal justice system and seeing the 33.5% percentage alone can leave one astonished. 
@@ -41,6 +41,7 @@ These data points give more information that meets the eye. It is astonishing th
 plot_jail_pop_for_us()
 
 ```
+
 What is the trend of US Prison Population across the years recorded in the dataset?
 
 As seen in this graph, the US prison population was mostly steady between 1970 and 1980, however, starting in the 80s, the prison population exploded and peaked in 2008. Following that, it has slowly decreased however there has not been considerable decrease in the numbers so far. This makes one question, what led to this sudden explosion in prison population starting in 1980?
@@ -51,6 +52,7 @@ As seen in this graph, the US prison population was mostly steady between 1970 a
 plot_jail_pop_by_states(c("WA", "OR", "CA"))
 
 ```
+
 Where does the west coast stand on prison population?
 
 As one could have imagined, California, the state with the largest population in the US has significantly higher jail populations as compared to the other two states. However, Washington and Oregon also have significant populations, while not nearly as much as California, but have managed to keep really low prison populations. This can make one wonder what are some policies that could have been undertaken by these two state governments that resulted in such a difference when compared to California?
@@ -60,6 +62,7 @@ As one could have imagined, California, the state with the largest population in
 plot_jail_pop_by_states(c("WA", "OR", "CA", "NY", "WV", "OH", "TX", "FL"))
 
 ```
+
 How do some of the states trend soecifically with Jail Population in their states?
 
 While we already saw the results in the west coast states, adding some other states from various regions of the country shows new, interesting trends. New York has significantly lower populations for such an important and populous state. Furthermore, one can understand the numbers as seen for Texas and Florida.
@@ -71,6 +74,7 @@ While we already saw the results in the west coast states, adding some other sta
 get_black_pop_prison_graph()
 
 ```
+
 How do black populations map to the populations in jail?
 This graph represents the black population to population in prison for the county that has the highest black imprisonment rate. As we can see, there are external forces that are contributing to this insane difference in population and population in prison.
 
@@ -80,5 +84,6 @@ This graph represents the black population to population in prison for the count
 black_prison_pop_map()
 
 ```
+
 How do the jail rates among black populations trend on counties when plotted on a map?
 Seeing how Cook County has the highest jail population of black people, and Wade Hampton Census Area has highest proportion of black people, one would imagine these two points would end up dark red on the map. However, to my surprise, such was not the case. While most of the country was overwhelmingly green, there were very specific counties with really high rates of black imprisonment.  
